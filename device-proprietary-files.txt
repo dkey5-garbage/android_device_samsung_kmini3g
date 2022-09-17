@@ -220,9 +220,3 @@ lib/libinvensense_hal.so:vendor/lib/libinvensense_hal.so
 lib/libmllite.so:vendor/lib/libmllite.so 
 lib/libmplmpu.so:vendor/lib/libmplmpu.so
 lib/hw/sensors.msm8226.so:vendor/lib/hw/sensors.vendor.msm8226.so
-
-# Time services
--app/TimeService/TimeService.apk
-bin/time_daemon:vendor/bin/time_daemon
-vendor/lib/libTimeService.so
--vendor/lib/libtime_genoff.so

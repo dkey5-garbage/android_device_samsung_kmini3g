@@ -14,11 +14,13 @@
 # limitations under the License.
 
 # inherit from common msm8226
--include device/samsung/msm8226-common/BoardConfigCommon.mk
+include device/samsung/msm8226-common/BoardConfigCommon.mk
 
 DEVICE_PATH := device/samsung/kmini3g
 
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
+
+BUILD_FINGERPRINT := samsung/kmini3gxx/kmini3g:4.4.2/KOT49H/G800HXXU1ANL1:user/release-keys
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := kmini3g
@@ -78,7 +80,8 @@ TARGET_KERNEL_SOURCE := kernel/samsung/msm8226
 TARGET_KERNEL_CONFIG := lineage_kmini3g_defconfig
 
 # Legacy BLOB Support
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+TARGET_LD_SHIM_LIBS += \
+    /system/vendor/lib/libperipheral_client.so|libshim_binder.so
 TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
     /system/bin/mediaserver=22 \
     /system/vendor/bin/mm-qcamera-daemon=22 \
@@ -94,37 +97,27 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 12797246464
 
 # Power HAL
 TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(DEVICE_PATH)/power/power_ext.c
-TARGET_POWERHAL_VARIANT := qcom
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Radio
 BOARD_PROVIDES_LIBRIL := true
-TARGET_RIL_VARIANT := caf
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../$(DEVICE_PATH)/recovery/recovery_keys.c
-BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_RECOVERY_SWIPE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_DENSITY := hdpi
 
 # SELinux
 include $(DEVICE_PATH)/sepolicy/sepolicy.mk
 
 # Sensors
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
-
-# Shipping API Level
-PRODUCT_SHIPPING_API_LEVEL := 19
-
-# TWRP Support - Optional
-ifeq ($(WITH_TWRP),true)
--include $(DEVICE_PATH)/twrp.mk
-endif
 
 # inherit from the proprietary version
 -include vendor/samsung/kmini3g/BoardConfigVendor.mk
